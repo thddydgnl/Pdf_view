@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-electron/
+coverage/
+*.log
+release/
+*.exe
+*.blockmap
+*.dmg
+*.pkg
+*.app
+.DS_Store

@@ -1,0 +1,247 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI Variable", "Segoe UI", "Noto Sans KR", sans-serif;
+  line-height: 1.45;
+  font-weight: 400;
+  --bg: #2b2b2b;
+  --toolbar: #353535;
+  --toolbar-border: #4a4a4a;
+  --panel: #111111;
+  --panel-muted: rgba(12, 12, 12, 0.62);
+  --text: #f3f3f3;
+  --text-muted: #d3d3d3;
+  --text-subtle: #9f9f9f;
+  --accent: #4d89ff;
+  --accent-strong: #2e6cff;
+  --error: #d96f55;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.6rem;
+  background: var(--toolbar);
+  border-bottom: 1px solid var(--toolbar-border);
+}
+
+.topbar__left,
+.topbar__center,
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.topbar__center {
+  justify-content: center;
+}
+
+.topbar__right {
+  justify-content: flex-end;
+}
+
+.document-meta__title {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.toolbar-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 0.62rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.toolbar-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.toolbar-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.toolbar-button--primary {
+  border-color: var(--toolbar-border);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.counter-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 24px;
+  padding: 0 0.42rem;
+  background: #1a1a1a;
+  color: #ffffff;
+  font-size: 0.74rem;
+}
+
+.counter-box--input {
+  gap: 0.24rem;
+}
+
+.counter-box--input input {
+  width: 1.6rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ffffff;
+  text-align: right;
+  font: inherit;
+}
+
+.viewer {
+  min-height: 0;
+  overflow: auto;
+  padding: 0;
+  background: var(--bg);
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  max-width: 700px;
+  margin: 13vh auto 0;
+  padding: 1.4rem;
+  text-align: center;
+}
+
+.empty-state h1 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  color: #ffffff;
+}
+
+.page-list {
+  --zoom-scale: 1;
+  --page-base-width: 1100px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 0 0 1.5rem;
+}
+
+.page-card {
+  width: min(100%, calc(var(--page-base-width) * var(--zoom-scale)));
+}
+
+.page-card__shell {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0;
+  background: #202020;
+  cursor: grab;
+  user-select: none;
+  box-shadow: var(--shadow);
+}
+
+.page-card__shell:active {
+  cursor: grabbing;
+}
+
+.page-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #1d1d1d;
+}
+
+.page-card__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  background: #ffffff;
+}
+
+.toast {
+  position: fixed;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  max-width: min(420px, calc(100vw - 2rem));
+  padding: 0.7rem 0.8rem;
+  background: rgba(20, 20, 20, 0.94);
+  color: #ffffff;
+  font-size: 0.82rem;
+  box-shadow: var(--shadow);
+}
+
+.toast[data-tone="error"] {
+  background: rgba(140, 43, 25, 0.96);
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title action"
+      "counter counter";
+    row-gap: 0.35rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .topbar__left {
+    grid-area: title;
+  }
+
+  .topbar__center {
+    grid-area: counter;
+    justify-content: flex-start;
+  }
+
+  .topbar__right {
+    grid-area: action;
+  }
+
+  .page-card {
+    width: 100%;
+  }
+}
