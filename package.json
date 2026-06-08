@@ -2,7 +2,7 @@
   "name": "pdf-page-drag-viewer",
   "version": "0.1.0",
   "private": true,
-  "description": "Windows desktop PDF page drag viewer for browser chat uploads",
+  "description": "Desktop PDF page drag viewer for browser chat uploads",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "concurrently -k \"npm:dev:main\" \"npm:dev:renderer\" \"npm:dev:electron\"",
@@ -14,7 +14,8 @@
     "build:main": "tsc -p tsconfig.node.json",
     "build:renderer": "vite build",
     "preview": "vite preview",
-    "dist:win": "npm run prepare:icons && npm run build && electron-builder --win nsis portable"
+    "dist:win": "npm run prepare:icons && npm run build && electron-builder --win nsis portable",
+    "dist:mac": "npm run prepare:icons && npm run build && electron-builder --mac dmg zip"
   },
   "dependencies": {
     "pdfjs-dist": "^5.4.149"
@@ -43,7 +44,8 @@
       "dist-electron/**/*",
       "package.json",
       "build/icon.png",
-      "build/icon.ico"
+      "build/icon.ico",
+      "build/icon.icns"
     ],
     "asar": true,
     "win": {
@@ -53,6 +55,14 @@
       ],
       "icon": "build/icon.ico",
       "signAndEditExecutable": false
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity"
     },
     "nsis": {
       "oneClick": false,
@@ -64,6 +74,9 @@
       "installerIcon": "build/icon.ico",
       "uninstallerIcon": "build/icon.ico",
       "installerHeaderIcon": "build/icon.ico"
+    },
+    "dmg": {
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "portable": {
       "artifactName": "${productName}-${version}-portable.${ext}"
